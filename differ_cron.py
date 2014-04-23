@@ -37,13 +37,17 @@ def download_diff(diff_id, config):
 		f.write(difffile.read())
 	difffile.close()
 
-	return diff_download_path
+	return diff_download_path, state_download_path
 
 
-def import_diff(diff_path, config):
+def import_diff(diff_path, state_download_path, config):
 	logging.info("Importing with imposm")
 	imposm_config_path = config["imposm_config_path"]
 	subprocess.call([config["imposm_path"], "diff", "--config=%s" % imposm_config_path, diff_path])
+
+	logging.info("Cleaning up")
+	os.remove(diff_path)
+	os.remove(state_download_path)
 
 
 if __name__ == "__main__":
@@ -57,10 +61,9 @@ if __name__ == "__main__":
 	with open(args.config, "r") as configfile:
 		config = json.load(configfile)
 
-	print(args)
 	if args.diffnumber == None:
-		diff_path = download_diff(_get_current_diff_id(), config)
+		diff_path, state_download_path = download_diff(_get_current_diff_id(), config)
 	else:
-		diff_path = download_diff(args.diffnumber, config)
+		diff_path, state_download_path = download_diff(args.diffnumber, config)
 
-	import_diff(diff_path, config)
+	import_diff(diff_path, state_download_path, config)
