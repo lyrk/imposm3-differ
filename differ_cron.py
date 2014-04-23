@@ -24,7 +24,7 @@ def download_diff(diff_id, config):
 	url_osc = "%s%s.osc.gz" % (base_url, diff_id)
 	
 	state_download_path = os.path.join(config["download_path"], "%s.state.txt" % diff_id)
-	diff_download_path = os.path.join(config["download_path"], "%s.state.txt" % diff_id)
+	diff_download_path = os.path.join(config["download_path"], "%s.osc.gz" % diff_id)
 
 	logging.info("Downloading diff file (id %s)" % diff_id)
 	statefile = urllib.urlopen(url_state)
@@ -41,6 +41,7 @@ def download_diff(diff_id, config):
 
 
 def import_diff(diff_path, config):
+	print(diff_path)
 	logging.info("Importing with imposm")
 	imposm_config_path = config["imposm_config_path"]
 	subprocess.call([config["imposm_path"], "diff", "--config=%s" % imposm_config_path, diff_path])
