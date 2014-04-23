@@ -19,7 +19,6 @@ def _get_current_diff_id():
 
 
 def download_diff(diff_id, config):
-	diff_id = _get_current_diff_id()
 	base_url = "http://planet.osm.org/replication/day/000/000/"
 	url_state = "%s%s.state.txt" % (base_url, diff_id)
 	url_osc = "%s%s.osc.gz" % (base_url, diff_id)
@@ -58,6 +57,7 @@ if __name__ == "__main__":
 	with open(args.config, "r") as configfile:
 		config = json.load(configfile)
 
+	print(args)
 	if args.diffnumber == None:
 		diff_path = download_diff(_get_current_diff_id(), config)
 	else:
