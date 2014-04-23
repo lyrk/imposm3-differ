@@ -1,0 +1,5 @@
+{
+	"imposm_path": "/home/osm/rendering/imposm3",
+	"imposm_config_path": "/home/osm/rendering/imposm.json",
+	"download_path": "./"
+}
