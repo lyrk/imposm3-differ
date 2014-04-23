@@ -41,7 +41,6 @@ def download_diff(diff_id, config):
 
 
 def import_diff(diff_path, config):
-	print(diff_path)
 	logging.info("Importing with imposm")
 	imposm_config_path = config["imposm_config_path"]
 	subprocess.call([config["imposm_path"], "diff", "--config=%s" % imposm_config_path, diff_path])
