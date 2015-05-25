@@ -12,16 +12,14 @@ from datetime import date
 def _get_current_diff_id():
 	timedelta = date.today() - date(2012, 9, 12)
 	current_id = timedelta.days
-	if current_id >= 1000:
-		raise ValueError("Diff ID is greater than or equals 1000. This could cause problems. Diff download aborted.")
-	
 	return current_id
 
 
 def download_diff(diff_id, config):
-	base_url = "http://planet.osm.org/replication/day/000/000/"
-	url_state = "%s%s.state.txt" % (base_url, diff_id)
-	url_osc = "%s%s.osc.gz" % (base_url, diff_id)
+	base_url = "http://planet.osm.org/replication/day/{AAA}/{BBB}/{CCC}.{suffix}"
+        (AAA,BBB,CCC)=map(''.join, zip(*[iter('{0:09d}'.format(diff_id))]*3))
+	url_state = base_url.format(AAA=AAA,BBB=BBB,CCC=CCC,suffix="state.txt")
+        url_osc = base_url.format(AAA=AAA,BBB=BBB,CCC=CCC,suffix="osc.gz")
 	
 	state_download_path = os.path.join(config["download_path"], "%s.state.txt" % diff_id)
 	diff_download_path = os.path.join(config["download_path"], "%s.osc.gz" % diff_id)
